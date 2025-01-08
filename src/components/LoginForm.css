@@ -1,0 +1,7 @@
+/* src/components/LoginForm.css */
+.centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Full viewport height */
+}
