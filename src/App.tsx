@@ -3,7 +3,9 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Page from './pages/Page';
+import Dashboard from './pages/Dashboard';
 import loginForm from './components/LoginForm';
+import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './contexts/AuthContext';
 
 /* Core CSS required for Ionic components to work properly */
@@ -47,6 +49,11 @@ const App: React.FC = () => {
           {/*<Menu />*/}
           <IonRouterOutlet id="main">
             <Route exact path="/" component={loginForm}/>
+            <PrivateRoute
+              component={Dashboard}
+              path="/dashboard"
+              exact
+            />
             {/*<Route path="/" exact={true}>
               <Redirect to="/folder/Inbox" />
             </Route>
