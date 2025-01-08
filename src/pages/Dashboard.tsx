@@ -1,18 +1,49 @@
 import React from 'react';
-import { IonContent, IonFooter, IonTitle, IonToolbar } from '@ionic/react';
+import { 
+	IonContent, 
+	IonFooter, 
+	IonTitle, 
+	IonToolbar,
+	IonPage,
+	IonMenuButton,
+	IonHeader,
+	IonButtons
+} from '@ionic/react';
+import { IonIcon } from '@ionic/react';
+import { logOut } from 'ionicons/icons';
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext'
 
 function Dashboard() {
-  return (
-    <>
-      <IonContent className="ion-padding">
-        <h1>Content</h1>
-      </IonContent>
-      <IonFooter>
-        <IonToolbar>
-          <IonTitle>Footer</IonTitle>
-        </IonToolbar>
-      </IonFooter>
-    </>
+	const title = 'Capstone'
+	const { logout } = useContext(AuthContext)
+
+  	return (
+	    <>
+	      <IonPage>
+		      <IonHeader>
+		        <IonToolbar>
+		          <IonTitle>Header Toolbar</IonTitle>
+		        </IonToolbar>
+		      </IonHeader>
+
+		      <IonContent fullscreen>
+		        <IonHeader collapse="condense">
+		          <IonToolbar>
+		            <IonTitle size="large">{title}</IonTitle>
+		          </IonToolbar>
+		        </IonHeader>
+		      </IonContent>
+
+		      <IonFooter>
+		      	<IonToolbar>
+		      		<IonTitle onClick={logout}>
+		           		<IonIcon icon={logOut}></IonIcon>
+		      		</IonTitle>
+		        </IonToolbar>
+		      </IonFooter>
+	    </IonPage>
+	    </>
   );
 }
 export default Dashboard;

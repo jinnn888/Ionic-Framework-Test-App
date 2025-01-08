@@ -1,6 +1,7 @@
 import React, {
-	createContext,
+	useEffect,
 	useState,
+	createContext,
 	useContext,
 	ReactNode
 } from 'react'
@@ -36,17 +37,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 			});
 			localStorage.removeItem('auth_token');
 			setUser(null)
+			window.location.href = "/";
 
 		} catch(error) {
 			console.error(error)
 		}
 	}
-
 	return (
 		<AuthContext.Provider value={{ user, setUser, logout, isAuthenticated }}>
 			{children}
 		</AuthContext.Provider>
 	);
-
 }
 
