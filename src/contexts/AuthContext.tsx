@@ -18,14 +18,17 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 	const [user, setUser] = useState<any>(null);
 	const accessToken = localStorage.getItem('auth_token');
-
+	let isAuthenticated = !!accessToken;
+	console.log(isAuthenticated)
 	const logout = async () => {
-		if (!accessToken) {
+		if (!isAuthenticated) {
 			alert('No token found');
 			return;
 		}
 
 		try {
+			await api.get('/sanctum/csrf-cookie');
+
 			await api.post('/api/logout', {}, {
 				headers: {
 					'Authorization': `Bearer ${accessToken}` 
@@ -33,14 +36,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 			});
 			localStorage.removeItem('auth_token');
 			setUser(null)
-			
+
 		} catch(error) {
 			console.error(error)
 		}
 	}
 
 	return (
-		<AuthContext.Provider value={{ user, setUser, logout, isAuthenticated: !!user }}>
+		<AuthContext.Provider value={{ user, setUser, logout, isAuthenticated }}>
 			{children}
 		</AuthContext.Provider>
 	);

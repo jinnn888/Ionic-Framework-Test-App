@@ -52,15 +52,16 @@ const loginForm: React.FC = () => {
 		<IonPage>
 			<IonContent className='ion-padding'>
 				<div className='centered-content'>
+					<h2>Login</h2>
 					<IonCard>
 						<IonCardHeader>
-							<IonCardTitle>Login</IonCardTitle>
+							{/*<IonCardTitle>Login</IonCardTitle>*/}
 						</IonCardHeader>
 						<IonCardContent>
 							<IonList>
 								<IonItem style={{ marginBottom: '12px' }}>
 							        <IonInput 
-							        	label="ID Number" 
+							        	placeholder="Email"
 							        	type='text'
 							        	value={email}
           								onIonChange={(e) => setEmail(e.detail.value!)}
@@ -87,7 +88,11 @@ const loginForm: React.FC = () => {
 									style={{ marginTop: '12px' }} 
 									expand="block" 
 									color='dark'>Logout</IonButton>)
-								: <IonButton onClick={handleLogin} style={{ marginTop: '12px' }} expand="full" color='dark'>Login</IonButton>}
+								: <IonButton 
+									onClick={handleLogin} 
+									style={{ marginTop: '12px' }} 
+									expand="block" 
+									color='dark'>Login</IonButton>}
 							
 						</IonCardContent>
 					</IonCard>
