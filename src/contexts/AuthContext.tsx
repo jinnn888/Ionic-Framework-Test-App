@@ -30,14 +30,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 		try {
 			await api.get('/sanctum/csrf-cookie');
 
-			await api.post('/api/logout', {}, {
+			api.post('/api/logout', {}, {
 				headers: {
 					'Authorization': `Bearer ${accessToken}` 
 				}
-			});
-			localStorage.removeItem('auth_token');
-			setUser(null)
-			window.location.href = "/";
+			}).then(() => {
+				localStorage.removeItem('auth_token');
+				setUser(null)
+				window.location.href = "/";
+			})
 
 		} catch(error) {
 			console.error(error)

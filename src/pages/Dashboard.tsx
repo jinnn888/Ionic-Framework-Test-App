@@ -30,7 +30,7 @@ function Dashboard() {
 		      <IonContent fullscreen>
 		        <IonHeader collapse="condense">
 		          <IonToolbar>
-		            <IonTitle size="large">{title}</IonTitle>
+		            <IonTitle size="medium">{title}</IonTitle>
 		          </IonToolbar>
 		        </IonHeader>
 		      </IonContent>
@@ -38,7 +38,10 @@ function Dashboard() {
 		      <IonFooter>
 		      	<IonToolbar>
 		      		<IonTitle onClick={logout}>
-		           		<IonIcon icon={logOut}></IonIcon>
+		           		<IonIcon
+		           		size="large"
+		           		color="medium" 
+		           		icon={logOut}></IonIcon>
 		      		</IonTitle>
 		        </IonToolbar>
 		      </IonFooter>

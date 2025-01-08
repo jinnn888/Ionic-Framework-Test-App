@@ -15,7 +15,8 @@ import {
 	IonButton,
 	IonHeader,
 	IonToolbar,
-	IonTitle 
+	IonTitle,
+	useIonLoading	
 } from '@ionic/react'
 import './LoginForm.css';
 import api from '../api/axiosInstance'
@@ -29,29 +30,40 @@ const loginForm: React.FC = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState();
-
+	const [present, dismiss] = useIonLoading();
 
 	const handleLogin = async () => {
+		present({
+          message: 'Logging in...',
+         });
 		try {
-			await api.get('/sanctum/csrf-cookie');
+			await api.get('/sanctum/csrf-cookie', {
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			});
 
-			const response = await api.post('/api/login', { email, password })
-			const data = await response.data;
-			console.log(data)
+			const { data } = await api.post('/api/login', { email, password })
 
-			if (data.user) {
+			if (data.user && data.access_token) {
+				dismiss()
 				setUser(data.user)
 				localStorage.setItem('auth_token', data.access_token);
 				history.push('/dashboard');
+			} else {
+				alert('Invalid credentials or login failed.');
+				dismiss()
 			}
 
 		} catch (error) {
-			console.error(error.response?.data || 'Login failed');
+			const errorMessage = error.response?.data?.message || 'Login failed. Please try again.';
+			alert(errorMessage);
+			dismiss()
 		}
 	};
 
 	return (
-		<IonPage>
+		<IonPage>	
 		  <IonContent className='ion-padding'>
 		    <div className='centered-content'>
 		      <h2>Login</h2>
@@ -64,7 +76,7 @@ const loginForm: React.FC = () => {
 		            <IonItem style={{ marginBottom: '12px' }}>
 		              <IonInput
 		                placeholder="Email"
-		                type='text'
+		                type='email'
 		                value={email}
 		                onIonChange={(e) => setEmail(e.detail.value!)}
 		              />
